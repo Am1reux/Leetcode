@@ -1,0 +1,33 @@
+/*
+找到长度为k的子集所有子集，长度从0遍历到nums.length
+回溯法
+如果k == 0 则结果集添加空集，并return
+从当前位置遍历到结束位置，将当前字符字符添加cur，递归下一个位置，递归结束后进行，回溯
+
+*/
+
+
+class Solution {
+    List<Integer> cur = new ArrayList<>();
+    List<List<Integer>> res = new ArrayList<>();
+    /*找到长度为k的所有子串*/
+    public void backTrace(int []nums,int k, int start){
+        
+        if(k == 0){
+            res.add(new ArrayList<Integer>(cur));
+            return ;
+        }
+        for(int i = start; i < nums.length; i++){
+            cur.add(nums[i]);
+            backTrace(nums, k - 1, i + 1);
+            cur.remove(cur.size() - 1);
+        }
+    }
+    public List<List<Integer>> subsets(int[] nums) {
+        res = new ArrayList<>();
+        for(int k = 0; k <= nums.length; k++)
+            backTrace(nums, k, 0);
+//        backTrace(nums, 0, 0);
+        return res;
+    }
+}
